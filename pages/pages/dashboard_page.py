@@ -1,38 +1,60 @@
-from utils.element_finder import ElementFinder, build_locator_strategy
+# Filename: pages/dashboard_page.py
+# Description: Dashboard Page Object using centralized ElementFinder utility for robust locator strategy.
+
+from selenium.webdriver.common.by import By
+from utils.element_finder import ElementFinder
 
 class DashboardPage:
     def __init__(self, driver):
         self.driver = driver
-        self.finder = ElementFinder(driver)
+        self.ef = ElementFinder(driver)
 
-    def get_welcome_banner(self):
-        locators = build_locator_strategy({"aria_label": "Welcome Banner"})
-        return self.finder.find("Welcome Banner", "Dashboard", locators)
+    def wait_for_welcome_banner(self):
+        self.ef.assert_visible(
+            "Welcome Banner",
+            "Dashboard",
+            {
+                "accessibility": (By.CSS_SELECTOR, "[aria-label='Welcome Banner']"),
+                "data-testid": (By.CSS_SELECTOR, "[data-testid='welcome-banner']"),
+                "semantic": (By.CSS_SELECTOR, "div.welcome-banner"),
+                "text": None  # Avoid XPaths unless absolutely necessary
+            }
+        )
 
-    def get_install_hp_smart_app_btn(self):
-        locators = build_locator_strategy({
-            "aria_label": "Install HP Smart App",
-            "data_testid": "install-hp-smart-app-btn"
-        })
-        return self.finder.find("Install HP Smart App Button", "Dashboard", locators)
+    def click_install_hp_smart_app(self):
+        self.ef.click(
+            "Install HP Smart App Button",
+            "Dashboard",
+            {
+                "accessibility": (By.CSS_SELECTOR, "[aria-label='Install HP Smart App']"),
+                "data-testid": (By.CSS_SELECTOR, "[data-testid='install-hp-smart-app']"),
+                "semantic": (By.CSS_SELECTOR, "button.install-hp-smart-app"),
+                "text": (By.XPATH, "//button[normalize-space()='Install HP Smart App']")
+            }
+        )
 
-    def get_download_now_link(self):
-        locators = build_locator_strategy({
-            "aria_label": "Download now",
-            "data_testid": "download-now-link"
-        })
-        return self.finder.find("Download Now Link", "Dashboard", locators)
+    def click_download_now_link(self):
+        self.ef.click(
+            "Download Now Link",
+            "Dashboard",
+            {
+                "accessibility": (By.CSS_SELECTOR, "[aria-label='Download now']"),
+                "data-testid": (By.CSS_SELECTOR, "[data-testid='download-now']"),
+                "semantic": (By.CSS_SELECTOR, "a.download-now"),
+                "text": (By.XPATH, "//a[normalize-space()='Download now']")
+            }
+        )
 
-    def get_learn_more_link(self):
-        locators = build_locator_strategy({
-            "aria_label": "Learn more",
-            "data_testid": "learn-more-link"
-        })
-        return self.finder.find("Learn More Link", "Dashboard", locators)
+    def click_learn_more_link(self):
+        self.ef.click(
+            "Learn More Link",
+            "Dashboard",
+            {
+                "accessibility": (By.CSS_SELECTOR, "[aria-label='Learn more']"),
+                "data-testid": (By.CSS_SELECTOR, "[data-testid='learn-more']"),
+                "semantic": (By.CSS_SELECTOR, "a.learn-more"),
+                "text": (By.XPATH, "//a[normalize-space()='Learn more']")
+            }
+        )
 
-    def get_sustainability_card(self):
-        locators = build_locator_strategy({
-            "aria_label": "Sustainability card",
-            "data_testid": "sustainability-card"
-        })
-        return self.finder.find("Sustainability Card", "Dashboard", locators)
+    # Add similar methods for other critical elements as needed
